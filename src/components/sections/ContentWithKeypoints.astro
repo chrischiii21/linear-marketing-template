@@ -1,0 +1,108 @@
+---
+interface Props {
+  title?: string;
+  eyebrow?: string;
+  description?: string;
+  ctaText?: string;
+  ctaLink?: string;
+  image?: string;
+  keyPoints?: string[];
+}
+
+const {
+  title,
+  eyebrow,
+  description,
+  ctaText,
+  ctaLink,
+  image,
+  keyPoints = [],
+} = Astro.props;
+---
+
+<section class="py-12 sm:py-16 md:py-24 bg-white">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
+      <div class="order-2 lg:order-1">
+        {
+          eyebrow && (
+            <p class="text-primary font-bold text-xs sm:text-sm uppercase tracking-wider mb-3 sm:mb-4">
+              {eyebrow}
+            </p>
+          )
+        }
+        {
+          title && (
+            <h2 class="text-2xl sm:text-3xl md:text-4xl font-bold text-primary-dark mb-4 sm:mb-6">
+              {title}
+            </h2>
+          )
+        }
+        {
+          description && (
+            <p class="text-base sm:text-lg text-gray-600 mb-6" set:html={description} />
+          )
+        }
+        {
+          keyPoints.length > 0 && (
+            <ul class="space-y-2 sm:space-y-3 mb-6 sm:mb-8">
+              {keyPoints.map((point) => (
+                <li class="flex items-start">
+                  <svg
+                    class="w-5 h-5 sm:w-6 sm:h-6 text-primary-dark mr-2 sm:mr-3 flex-shrink-0 mt-0.5"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M5 13l4 4L19 7"
+                    />
+                  </svg>
+                  <span class="text-sm sm:text-base text-gray-700">
+                    {point}
+                  </span>
+                </li>
+              ))}
+            </ul>
+          )
+        }
+        {
+          ctaText && ctaLink && (
+            <a
+              href={ctaLink}
+              class="inline-flex items-center justify-center px-6 py-3 sm:px-8 sm:py-4 bg-primary-dark text-white font-medium rounded-lg hover:bg-black transition text-sm sm:text-base"
+            >
+              {ctaText}
+            </a>
+          )
+        }
+      </div>
+      {
+        image && (
+          <div class="relative overflow-hidden rounded-lg shadow-lg order-1 lg:order-2">
+            <picture>
+              <source
+                media="(max-width: 640px)"
+                srcset={image}
+                width="640"
+                height="440"
+              />
+              <img
+                src={image}
+                alt={title || "Venue Network"}
+                width="665"
+                height="457"
+                class="w-full h-auto object-cover"
+                loading="lazy"
+                decoding="async"
+              />
+            </picture>
+          </div>
+        )
+      }
+    </div>
+  </div>
+</section>

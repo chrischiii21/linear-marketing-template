@@ -1,0 +1,62 @@
+---
+import Features from "./Features.astro";
+
+interface Props {
+  eyebrow?: string;
+  title?: string;
+  description?: string;
+  features?: any[];
+  ctaText?: string;
+  ctaLink?: string;
+}
+
+const {
+  eyebrow,
+  title,
+  description,
+  features = [],
+  ctaText,
+  ctaLink,
+} = Astro.props;
+---
+
+<section class="py-12 sm:py-16 md:py-24 bg-gray-50">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-center mb-8 sm:mb-12">
+      {
+        eyebrow && (
+          <p class="text-xs sm:text-sm font-semibold text-primary uppercase tracking-wide mb-2">
+            {eyebrow}
+          </p>
+        )
+      }
+      {
+        title && (
+          <h2 class="text-2xl sm:text-3xl md:text-4xl font-bold text-primary-dark mb-4">
+            {title}
+          </h2>
+        )
+      }
+      {
+        description && (
+          <p class="text-base sm:text-lg md:text-xl text-gray-600 max-w-3xl mx-auto" set:html={description} />
+        )
+      }
+    </div>
+
+    <Features features={features} />
+
+    {
+      ctaText && ctaLink && (
+        <div class="text-center mt-8 sm:mt-12">
+          <a
+            href={ctaLink}
+            class="inline-block px-6 py-3 sm:px-8 sm:py-4 bg-primary-dark text-white font-medium rounded-lg hover:bg-black transition text-sm sm:text-base"
+          >
+            {ctaText}
+          </a>
+        </div>
+      )
+    }
+  </div>
+</section>

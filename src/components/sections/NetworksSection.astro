@@ -1,0 +1,65 @@
+---
+import LogoSlider from "~/components/widgets/LogoSlider.astro";
+
+interface Network {
+  title: string;
+  brands: Array<{
+    name: string;
+    logo: string;
+  }>;
+}
+
+interface Props {
+  title?: string;
+  subtitle?: string;
+  description?: string;
+  networks?: Network[];
+}
+
+const {
+  title,
+  subtitle,
+  description,
+  networks = [],
+} = Astro.props;
+---
+
+<section class="py-20 bg-white">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <!-- Section Header -->
+    <div class="text-center mb-16">
+      {
+        title && (
+          <h2 class="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+            {title}
+          </h2>
+        )
+      }
+      {
+        subtitle && (
+          <p class="text-xl text-primary-dark font-medium mb-4" set:html={subtitle} />
+        )
+      }
+      {
+        description && (
+          <p class="text-lg text-gray-600 max-w-3xl mx-auto" set:html={description} />
+        )
+      }
+    </div>
+
+    <!-- Networks Sliders with Arrows -->
+    <div class="space-y-12">
+      {
+        networks.map((network) => (
+          <LogoSlider
+            title={network.title}
+            brands={network.brands}
+            itemsPerView={3}
+            autoplay={false}
+            speed={5}
+          />
+        ))
+      }
+    </div>
+  </div>
+</section>

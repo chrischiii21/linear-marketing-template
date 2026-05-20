@@ -1,0 +1,48 @@
+{
+  "business": {
+    "name": "Dealer Template",
+    "fullName": "Dealer Template",
+    "tagline": "Your trusted partner for comprehensive digital marketing solutions, from custom website design and SEO to indoor billboard advertising and targeted campaigns that deliver real results.",
+    "description": "We are a local marketing company in Denver, Colorado. Premium marketing solutions including website design, social media management, and indoor billboard advertising."
+  },
+  "location": {
+    "city": "Denver",
+    "state": "Colorado",
+    "address": "Denver, CO",
+    "fullAddress": "Denver, CO"
+  },
+  "contact": {
+    "email": "info@dealertemplate.com",
+    "phone": "5555555555",
+    "phoneFormatted": "555-555-5555"
+  },
+  "colors": {
+    "primary": "#0D2A63",
+    "secondary": "#F5BF3A",
+    "tertiary": "#DDAE05",
+    "quaternary": "#ffffff"
+  },
+  "logo": {
+    "src": "/images/logo/dealer-logo.avif",
+    "alt": "Dealer Template Logo"
+  },
+  "social": {
+    "facebook": "https://www.facebook.com/ntxbillboards/",
+    "instagram": "https://www.instagram.com/dealertemplate/",
+    "linkedin": "https://www.linkedin.com/company/ntx-indoor-digital-billboards/",
+    "youtube": "https://www.youtube.com/@ntxdigital",
+    "twitter": ""
+  },
+  "seo": {
+    "siteName": "Dealer Template",
+    "defaultTitle": "Dealer Template | Digital Marketing in Denver",
+    "defaultDescription": "We are a local marketing company in Denver, Colorado. Premium marketing solutions including website design, social media management, and indoor billboard advertising.",
+    "keywords": "Denver marketing agency, digital marketing Denver, marketing services Denver CO, indoor billboard advertising, social media management, website design Denver, PPC advertising, Google Business Profile, local marketing Denver",
+    "siteUrl": "https://ntv-template-1.vercel.app",
+    "ogImage": "/images/logo/dealer-logo.avif",
+    "twitterHandle": "@dealertemplate"
+  },
+  "analytics": {
+    "googleAnalyticsId": ""
+  }
+}

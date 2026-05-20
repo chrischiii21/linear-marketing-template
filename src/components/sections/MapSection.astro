@@ -1,0 +1,339 @@
+---
+import { GOOGLE_MAPS_EMBED_URL } from "~/lib/config";
+
+interface Location {
+  name?: string;
+  url?: string;
+}
+
+interface Props {
+  title?: string;
+  description?: string;
+  locations?: (string | Location)[];
+  mapUrl?: string;
+  viewMode?: "half" | "full";
+}
+
+const {
+  title,
+  description,
+  locations = [],
+  mapUrl = GOOGLE_MAPS_EMBED_URL,
+  viewMode = "half"
+} = Astro.props;
+
+// Normalize locations to always have name and url
+const normalizedLocations = locations.map(loc => {
+  if (typeof loc === 'string') {
+    return { name: loc, url: null };
+  }
+  return { name: loc.name || '', url: loc.url || null };
+});
+---
+
+<section class="py-12 sm:py-16 md:py-24 bg-gray-50">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-center mb-8 sm:mb-12">
+      {
+        title && (
+          <h2 class="text-2xl sm:text-3xl md:text-4xl font-bold text-primary-dark mb-4">
+            {title}
+          </h2>
+        )
+      }
+      {
+        description && (
+          <p class="text-base sm:text-lg md:text-xl text-gray-600" set:html={description} />
+        )
+      }
+    </div>
+
+    {
+      viewMode === "full" ? (
+        /* Full Width Map View with overlay list */
+        <div class="w-full">
+          <div class="relative w-full h-full sm:h-[500px] lg:h-[600px] rounded-lg overflow-hidden shadow-lg">
+            <iframe
+              src={mapUrl}
+              width="100%"
+              height="100%"
+              style="border:0;"
+              allowfullscreen=""
+              loading="lazy"
+              referrerpolicy="no-referrer-when-downgrade"
+              title="Location Map"
+            />
+
+            {
+              normalizedLocations && normalizedLocations.length > 0 && (
+                <>
+                  <div class="hidden lg:flex flex-col gap-4 absolute top-24 right-6 w-80 max-h-[65%] bg-primary-dark/95 backdrop-blur text-white p-6 rounded-xl shadow-2xl border border-white/10">
+                    <div>
+                      <h3 class="text-xl font-bold mb-2">Our Locations</h3>
+                      <p class="text-sm text-white/70">
+                        Browse the venues in our network while exploring the map.
+                      </p>
+                    </div>
+                    <div class="overflow-y-auto pr-2 custom-scrollbar">
+                      <ul class="space-y-3">
+                        {normalizedLocations.map((location) => (
+                          <li>
+                            {location.url ? (
+                              <a
+                                href={location.url}
+                                class="group flex w-full items-center gap-3 rounded-lg border border-white/10 bg-white/5 px-3 py-3 text-left transition hover:border-primary-lighter/60 hover:bg-white/10 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-primary-dark"
+                              >
+                                <span class="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full bg-primary-lighter/20 text-primary-lighter transition group-hover:bg-primary-lighter/30">
+                                  <svg
+                                    class="h-4 w-4"
+                                    fill="currentColor"
+                                    viewBox="0 0 20 20"
+                                  >
+                                    <path
+                                      fill-rule="evenodd"
+                                      d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z"
+                                      clip-rule="evenodd"
+                                    />
+                                  </svg>
+                                </span>
+                                <span class="flex-1 text-sm leading-snug">{location.name}</span>
+                              </a>
+                            ) : (
+                              <button
+                                type="button"
+                                data-map-location={location.name}
+                                class="group flex w-full items-center gap-3 rounded-lg border border-white/10 bg-white/5 px-3 py-3 text-left transition hover:border-primary-lighter/60 hover:bg-white/10 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-primary-dark"
+                              >
+                                <span class="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full bg-primary-lighter/20 text-primary-lighter transition group-hover:bg-primary-lighter/30">
+                                  <svg
+                                    class="h-4 w-4"
+                                    fill="currentColor"
+                                    viewBox="0 0 20 20"
+                                  >
+                                    <path
+                                      fill-rule="evenodd"
+                                      d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z"
+                                      clip-rule="evenodd"
+                                    />
+                                  </svg>
+                                </span>
+                                <span class="flex-1 text-sm leading-snug">{location.name}</span>
+                              </button>
+                            )}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
+                </>
+              )
+            }
+          </div>
+
+          {
+            normalizedLocations && normalizedLocations.length > 0 && (
+              <div class="mt-6 lg:hidden bg-primary-dark text-white p-6 rounded-lg shadow-lg">
+                <h3 class="text-xl font-bold mb-4">Our Locations</h3>
+                <ul class="space-y-3">
+                  {normalizedLocations.map((location) => (
+                    <li>
+                      {location.url ? (
+                        <a
+                          href={location.url}
+                          class="group flex w-full items-center gap-3 rounded-lg border border-white/10 bg-white/5 px-3 py-3 text-left transition hover:border-primary-lighter/60 hover:bg-white/10 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-primary-dark"
+                        >
+                          <span class="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full bg-primary-lighter/20 text-primary-lighter transition group-hover:bg-primary-lighter/30">
+                            <svg
+                              class="h-4 w-4"
+                              fill="currentColor"
+                              viewBox="0 0 20 20"
+                            >
+                              <path
+                                fill-rule="evenodd"
+                                d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z"
+                                clip-rule="evenodd"
+                              />
+                            </svg>
+                          </span>
+                          <span class="flex-1 text-sm">{location.name}</span>
+                        </a>
+                      ) : (
+                        <button
+                          type="button"
+                          data-map-location={location.name}
+                          class="group flex w-full items-center gap-3 rounded-lg border border-white/10 bg-white/5 px-3 py-3 text-left transition hover:border-primary-lighter/60 hover:bg-white/10 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-primary-dark"
+                        >
+                          <span class="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full bg-primary-lighter/20 text-primary-lighter transition group-hover:bg-primary-lighter/30">
+                            <svg
+                              class="h-4 w-4"
+                              fill="currentColor"
+                              viewBox="0 0 20 20"
+                            >
+                              <path
+                                fill-rule="evenodd"
+                                d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z"
+                                clip-rule="evenodd"
+                              />
+                            </svg>
+                          </span>
+                          <span class="flex-1 text-sm">{location.name}</span>
+                        </button>
+                      )}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )
+          }
+        </div>
+      ) : (
+        /* Half View - Map + Locations Side by Side */
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-stretch">
+          {/* Google Maps Embed */}
+          <div class="w-full min-h-[14rem] sm:min-h-[18rem] lg:min-h-[24rem] rounded-lg overflow-hidden shadow-lg flex">
+            <iframe
+              src={mapUrl}
+              class="w-full h-full"
+              style="border:0;"
+              allowfullscreen=""
+              loading="lazy"
+              referrerpolicy="no-referrer-when-downgrade"
+              title="Location Map"
+            />
+          </div>
+
+          {/* Locations List */}
+          {normalizedLocations && normalizedLocations.length > 0 && (
+            <div class="bg-primary-dark text-white p-6 sm:p-8 rounded-lg shadow-lg h-full flex flex-col">
+              <h3 class="text-xl sm:text-2xl font-bold mb-4 sm:mb-6">
+                Our Locations
+              </h3>
+              <div class="flex-1 min-h-0 overflow-y-auto pr-2 custom-scrollbar">
+                <ul class="space-y-3 sm:space-y-4">
+                {normalizedLocations.map((location) => (
+                  <li>
+                    {location.url ? (
+                      <a
+                        href={location.url}
+                        class="group flex w-full items-center gap-3 rounded-lg border border-white/10 bg-white/5 px-4 py-3 text-left transition hover:border-primary-lighter/60 hover:bg-white/10 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-primary-dark"
+                      >
+                        <span class="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-full bg-primary-lighter/20 text-primary-lighter transition group-hover:bg-primary-lighter/30">
+                          <svg
+                            class="h-5 w-5"
+                            fill="currentColor"
+                            viewBox="0 0 20 20"
+                          >
+                            <path
+                              fill-rule="evenodd"
+                              d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z"
+                              clip-rule="evenodd"
+                            />
+                          </svg>
+                        </span>
+                        <span class="flex-1 text-sm sm:text-base">{location.name}</span>
+                      </a>
+                    ) : (
+                      <button
+                        type="button"
+                        data-map-location={location.name}
+                        class="group flex w-full items-center gap-3 rounded-lg border border-white/10 bg-white/5 px-4 py-3 text-left transition hover:border-primary-lighter/60 hover:bg-white/10 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-primary-dark"
+                      >
+                        <span class="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-full bg-primary-lighter/20 text-primary-lighter transition group-hover:bg-primary-lighter/30">
+                          <svg
+                            class="h-5 w-5"
+                            fill="currentColor"
+                            viewBox="0 0 20 20"
+                          >
+                            <path
+                              fill-rule="evenodd"
+                              d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z"
+                              clip-rule="evenodd"
+                            />
+                          </svg>
+                        </span>
+                        <span class="flex-1 text-sm sm:text-base">{location.name}</span>
+                      </button>
+                    )}
+                  </li>
+                ))}
+                </ul>
+              </div>
+            </div>
+          )}
+        </div>
+      )
+    }
+  </div>
+</section>
+
+{
+  normalizedLocations && normalizedLocations.some(loc => !loc.url) && (
+    <script is:inline>
+      function initMapLocationButtons() {
+        const buttons = document.querySelectorAll("button[data-map-location]");
+        if (!buttons.length) return;
+
+        buttons.forEach((button) => {
+          if (button.dataset.mapEnhanced) return;
+          button.dataset.mapEnhanced = "true";
+
+          button.addEventListener("click", () => {
+            const location = button.getAttribute("data-map-location");
+            if (!location) return;
+            const targetUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
+              location
+            )}`;
+            window.open(targetUrl, "_blank", "noopener");
+          });
+        });
+      }
+
+      if (document.readyState === "loading") {
+        document.addEventListener("DOMContentLoaded", initMapLocationButtons);
+      } else {
+        initMapLocationButtons();
+      }
+
+      document.addEventListener("astro:after-swap", initMapLocationButtons);
+    </script>
+  )
+}
+
+<style is:inline>
+  .custom-scrollbar {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255, 255, 255, 0.45) rgba(255, 255, 255, 0.08);
+  }
+
+  .custom-scrollbar::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-track {
+    background: linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.05) 0%,
+      rgba(255, 255, 255, 0.08) 100%
+    );
+    border-radius: 9999px;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    background: linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.65) 0%,
+      rgba(255, 255, 255, 0.4) 100%
+    );
+    border-radius: 9999px;
+    border: 2px solid rgba(12, 31, 24, 0.55);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.85) 0%,
+      rgba(255, 255, 255, 0.55) 100%
+    );
+  }
+</style>

@@ -1,0 +1,165 @@
+---
+import type { MetaData } from "~/types";
+import { ClientRouter } from "astro:transitions";
+import Header from "~/components/widgets/Header.astro";
+import Footer from "~/components/widgets/Footer.astro";
+import PopupModal from "~/components/widgets/PopupModal.astro";
+import { SITE_NAME, SITE_URL } from "~/lib/config";
+import {
+  organizationSchema,
+  webSiteSchema,
+  localBusinessSchema,
+  webPageSchema,
+  breadcrumbSchema,
+  type BreadcrumbItem,
+} from "~/lib/schema";
+import "~/styles/global.css";
+
+export interface Props {
+  metadata?: MetaData;
+  schemas?: unknown[];
+  breadcrumbs?: BreadcrumbItem[];
+}
+
+const { metadata = {}, schemas = [], breadcrumbs } = Astro.props;
+const {
+  title = SITE_NAME,
+  description,
+  image,
+  canonical,
+  noindex,
+  nofollow,
+  keywords,
+} = metadata;
+
+// Construct full URL for canonical and OG tags
+const siteUrl = SITE_URL;
+const currentUrl = canonical || new URL(Astro.url.pathname, siteUrl).href;
+const ogImage = image || `${siteUrl}/images/logo/dealer-logo.png`;
+
+// Build the JSON-LD graph: global entities + auto WebPage + optional breadcrumbs + per-page schemas
+const autoWebPage = webPageSchema({
+  url: currentUrl,
+  name: title,
+  description,
+});
+
+const allSchemas: unknown[] = [
+  organizationSchema(),
+  webSiteSchema(),
+  localBusinessSchema(),
+  autoWebPage,
+  ...(breadcrumbs && breadcrumbs.length > 0 ? [breadcrumbSchema(breadcrumbs)] : []),
+  ...schemas.filter(Boolean),
+];
+---
+
+<!doctype html>
+<html lang="en" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="generator" content={Astro.generator} />
+
+    {/* Preload critical fonts */}
+    <link
+      rel="preload"
+      href="/fonts/DMSans-VariableFont_opsz,wght.ttf"
+      as="font"
+      type="font/ttf"
+      crossorigin
+    />
+
+    {/* Preload critical logo image */}
+    <link
+      rel="preload"
+      href="/logo/dealer-logo.avif"
+      as="image"
+      type="image/avif"
+      fetchpriority="high"
+    />
+
+    <title>{title}</title>
+    {description && <meta name="description" content={description} />}
+    {keywords && <meta name="keywords" content={keywords} />}
+    
+    {/* Canonical URL */}
+    <link rel="canonical" href={currentUrl} />
+    
+    {/* Robots meta */}
+    {!noindex && !nofollow && <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />}
+    {noindex && <meta name="robots" content="noindex" />}
+    {nofollow && <meta name="robots" content="nofollow" />}
+    
+    {/* Additional SEO meta tags */}
+    <meta name="author" content={SITE_NAME} />
+    <meta name="language" content="English" />
+    <meta name="revisit-after" content="7 days" />
+
+    {/* Open Graph / Facebook */}
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={currentUrl} />
+    <meta property="og:title" content={title} />
+    {description && <meta property="og:description" content={description} />}
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:site_name" content={SITE_NAME} />
+    <meta property="og:locale" content="en_US" />
+
+    {/* Twitter */}
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:url" content={currentUrl} />
+    <meta name="twitter:title" content={title} />
+    {description && <meta name="twitter:description" content={description} />}
+    <meta name="twitter:image" content={ogImage} />
+    
+    {/* Structured Data — emitted as separate JSON-LD blocks for clarity */}
+    {allSchemas.map((s) => (
+      <script type="application/ld+json" is:inline set:html={JSON.stringify(s)} />
+    ))}
+
+    {/* Inline critical CSS for faster initial render */}
+    <style is:inline>
+      /* Critical CSS - Inline for faster initial render */
+      @font-face {
+        font-family: "DM Sans";
+        src: url("/fonts/DMSans-VariableFont_opsz,wght.ttf") format("truetype-variations");
+        font-weight: 100 1000;
+        font-style: normal;
+        font-display: swap;
+      }
+      body {
+        font-family: "DM Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        margin: 0;
+        padding: 0;
+        overflow-x: hidden;
+      }
+      #main-header {
+        position: sticky;
+        top: 0;
+        z-index: 40;
+        width: 100%;
+        background-color: #f2eedf;
+        border-bottom: 1px solid #e5e1d2;
+      }
+      #header-logo {
+        height: 3rem;
+        width: auto;
+        transition: all 0.3s;
+      }
+      main {
+        display: block;
+        width: 100%;
+      }
+    </style>
+
+    <ClientRouter />
+  </head>
+  <body class="antialiased text-gray-900 bg-white">
+    <Header />
+    <main>
+      <slot />
+    </main>
+    <Footer />
+    <PopupModal />
+  </body>
+</html>

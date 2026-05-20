@@ -1,0 +1,17 @@
+---
+import type { MetaData } from '~/types';
+import type { BreadcrumbItem } from '~/lib/schema';
+import BaseLayout from './BaseLayout.astro';
+
+export interface Props {
+  metadata?: MetaData;
+  schemas?: unknown[];
+  breadcrumbs?: BreadcrumbItem[];
+}
+
+const { metadata = {}, schemas, breadcrumbs } = Astro.props;
+---
+
+<BaseLayout metadata={metadata} schemas={schemas} breadcrumbs={breadcrumbs}>
+  <slot />
+</BaseLayout>

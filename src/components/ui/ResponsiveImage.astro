@@ -1,0 +1,55 @@
+---
+export interface Props {
+  src: string;
+  alt: string;
+  width: number;
+  height: number;
+  class?: string;
+  loading?: "lazy" | "eager";
+  fetchpriority?: "high" | "low" | "auto";
+  sizes?: string;
+}
+
+const {
+  src,
+  alt,
+  width,
+  height,
+  class: className = "",
+  loading = "lazy",
+  fetchpriority = "auto",
+  sizes = "100vw",
+} = Astro.props;
+
+// Generate responsive image URLs for external images
+const isExternal = src.startsWith("http");
+const responsiveSizes = [640, 750, 828, 1080, 1200];
+
+// For ucarecdn images, use their built-in resizing
+const generateSrcSet = () => {
+  if (isExternal && src.includes("ucarecdn.com")) {
+    return responsiveSizes
+      .map((size) => {
+        const url = src.replace(/\/preview\/\d+x\d+/, `/preview/${size}x${Math.round((size * height) / width)}`);
+        return `${url} ${size}w`;
+      })
+      .join(", ");
+  }
+  return "";
+};
+
+const srcset = generateSrcSet();
+---
+
+<img
+  src={src}
+  alt={alt}
+  width={width}
+  height={height}
+  class={className}
+  loading={loading}
+  fetchpriority={fetchpriority}
+  srcset={srcset || undefined}
+  sizes={srcset ? sizes : undefined}
+  decoding="async"
+/>

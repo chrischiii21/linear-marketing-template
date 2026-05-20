@@ -1,0 +1,138 @@
+---
+interface Props {
+  title?: string;
+  eyebrow?: string;
+  description?: string;
+  ctaText?: string;
+  ctaLink?: string;
+  image?: string;
+  imagePosition?: "left" | "right";
+  background?: string;
+}
+
+const {
+  title,
+  eyebrow,
+  description,
+  ctaText,
+  ctaLink,
+  image,
+  imagePosition = "right",
+  background,
+} = Astro.props;
+
+// Handle background - can be a color name or custom color
+let bgClass = "";
+let bgStyle = "";
+let isDarkBg = false;
+
+if (background) {
+  if (background === "gray") {
+    bgClass = "bg-gray-50";
+    isDarkBg = false;
+  } else if (background === "white") {
+    bgClass = "bg-white";
+    isDarkBg = false;
+  } else if (background === "primary-dark") {
+    bgStyle = "background-color: var(--color-primary-dark)";
+    isDarkBg = true;
+  } else if (background === "primary") {
+    bgStyle = "background-color: var(--color-primary)";
+    isDarkBg = false;
+  } else if (background === "primary-light") {
+    bgStyle = "background-color: var(--color-primary-light)";
+    isDarkBg = false;
+  } else if (background.startsWith("#") || background.startsWith("rgb")) {
+    // Custom color - use inline style
+    bgStyle = `background-color: ${background}`;
+    isDarkBg = true;
+  } else if (background.startsWith("bg-")) {
+    // Already a Tailwind class
+    bgClass = background;
+    isDarkBg =
+      background.includes("primary") ||
+      background.includes("gray-8") ||
+      background.includes("gray-9") ||
+      background.includes("black");
+  } else {
+    // Default to white
+    bgClass = "bg-white";
+    isDarkBg = false;
+  }
+} else {
+  bgClass = "bg-white";
+}
+
+// Text color classes based on background
+const textColorClass = isDarkBg ? "text-white" : "text-gray-900";
+const subtextColorClass = isDarkBg ? "text-gray-100" : "text-gray-600";
+const eyebrowColorClass = isDarkBg ? "text-primary-lighter" : "text-primary-dark";
+---
+
+<section
+  class={`py-12 sm:py-16 md:py-24 ${bgClass}`}
+  {...bgStyle && { style: bgStyle }}
+>
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
+      <!-- Content Column -->
+      <div class={imagePosition === "left" ? "lg:order-2" : "lg:order-1"}>
+        {
+          eyebrow && (
+            <p
+              class={`${eyebrowColorClass} font-bold text-xs sm:text-sm uppercase tracking-wider mb-3 sm:mb-4`}
+            >
+              {eyebrow}
+            </p>
+          )
+        }
+        {
+          title && (
+            <h2
+              class={`text-2xl sm:text-3xl md:text-4xl font-bold ${textColorClass} mb-4 sm:mb-6`}
+            >
+              {title}
+            </h2>
+          )
+        }
+        {
+          description && (
+            <p
+              class={`text-base sm:text-lg ${subtextColorClass} mb-6 sm:mb-8`}
+              set:html={description}
+            />
+          )
+        }
+        {
+          ctaText && ctaLink && (
+            <a
+              href={ctaLink}
+              class="inline-flex items-center justify-center px-6 py-3 sm:px-8 sm:py-4 bg-primary-dark text-white font-medium rounded-lg hover:bg-black transition text-sm sm:text-base"
+            >
+              {ctaText}
+            </a>
+          )
+        }
+      </div>
+
+      <!-- Image Column -->
+      {
+        image && (
+          <div
+            class={`relative overflow-hidden rounded-lg shadow-lg ${imagePosition === "left" ? "lg:order-1" : "lg:order-2"}`}
+          >
+            <img
+              src={image}
+              alt={title || "Section image"}
+              width="1000"
+              height="750"
+              class="w-full h-auto object-cover"
+              loading="lazy"
+              decoding="async"
+            />
+          </div>
+        )
+      }
+    </div>
+  </div>
+</section>

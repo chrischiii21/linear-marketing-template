@@ -1,0 +1,327 @@
+@import "tailwindcss";
+
+/* ============================================
+   GLOBAL COLOR SCHEME - TAILWIND V4
+   Change these 4 colors to update the entire site
+   ============================================ */
+@theme {
+  /* Your Brand Colors - Black & White Palette */
+  --color-primary-dark: #181818;
+  --color-primary: #aaaaaa;
+  --color-primary-light: #cccccc;
+  --color-neutral: #f2eedf;
+
+  /* Auto-generated shades */
+  --color-primary-darker: #000000;
+  --color-primary-lighter: #bbbbbb;
+  --color-neutral-dark: #e5e1d2;
+  --color-neutral-darker: #d8d4c5;
+
+  /* Map to Tailwind color system */
+  --color-primary-50: #f2eedf;
+  --color-primary-100: var(--color-neutral);
+  --color-primary-200: var(--color-neutral-dark);
+  --color-primary-300: var(--color-neutral-darker);
+  --color-primary-400: var(--color-primary-light);
+  --color-primary-500: var(--color-primary-lighter);
+  --color-primary-600: var(--color-primary);
+  --color-primary-700: #888888;
+  --color-primary-800: #444444;
+  --color-primary-900: var(--color-primary-dark);
+
+  /* Map blue to primary (for existing components) */
+  --color-blue-50: var(--color-primary-50);
+  --color-blue-100: var(--color-primary-100);
+  --color-blue-200: var(--color-primary-200);
+  --color-blue-300: var(--color-primary-300);
+  --color-blue-400: var(--color-primary-400);
+  --color-blue-500: var(--color-primary-500);
+  --color-blue-600: var(--color-primary-600);
+  --color-blue-700: var(--color-primary-700);
+  --color-blue-800: var(--color-primary-800);
+  --color-blue-900: var(--color-primary-900);
+}
+
+/* DM Sans Font */
+@font-face {
+  font-family: "DM Sans";
+  src: url("/fonts/DMSans-VariableFont_opsz,wght.ttf")
+    format("truetype-variations");
+  font-weight: 100 1000;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "DM Sans";
+  src: url("/fonts/DMSans-Italic-VariableFont_opsz,wght.ttf")
+    format("truetype-variations");
+  font-weight: 100 1000;
+  font-style: italic;
+  font-display: swap;
+}
+
+/* Apply DM Sans globally */
+body {
+  font-family: "DM Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    sans-serif;
+}
+
+/* Custom Scrollbar Styles for Dropdown */
+.scrollbar-thin {
+  scrollbar-width: thin;
+  scrollbar-color: #d1d5db #f3f4f6;
+}
+
+.scrollbar-thin::-webkit-scrollbar {
+  width: 6px;
+}
+
+.scrollbar-thin::-webkit-scrollbar-track {
+  background: #f3f4f6;
+  border-radius: 3px;
+}
+
+.scrollbar-thin::-webkit-scrollbar-thumb {
+  background: #d1d5db;
+  border-radius: 3px;
+}
+
+.scrollbar-thin::-webkit-scrollbar-thumb:hover {
+  background: #9ca3af;
+}
+
+/* Mobile Dropdown Transitions */
+.mobile-dropdown-content {
+  transition: max-height 0.3s ease-in-out;
+}
+
+/* Fix white line artifacts on dark backgrounds */
+section,
+footer,
+header {
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  transform: translateZ(0);
+}
+
+/* Ensure no gaps between sections */
+body {
+  overflow-x: hidden;
+}
+
+main {
+  display: block;
+  width: 100%;
+}
+
+/* Content Links Styling */
+/* Links in light backgrounds */
+/* Exclude links with inline text-decoration: none style */
+.text-gray-600 a:not([style*="text-decoration: none"]),
+.text-gray-700 a:not([style*="text-decoration: none"]) {
+  color: var(--color-primary-dark);
+  font-weight: 700;
+  text-decoration: underline;
+  text-decoration-color: var(--color-primary-dark);
+  text-decoration-thickness: 2px;
+  text-underline-offset: 3px;
+  transition: all 0.2s ease;
+}
+
+.text-gray-600 a:not([style*="text-decoration: none"]):hover,
+.text-gray-700 a:not([style*="text-decoration: none"]):hover {
+  color: #000000;
+  text-decoration-thickness: 3px;
+}
+
+/* Links in dark backgrounds - use white with bold underline */
+/* But exclude buttons, card links, and links with inline text-decoration: none */
+.text-gray-100 a:not(.inline-flex):not([class*="bg-"]):not([class*="card"]):not([style*="text-decoration: none"]),
+.text-white a:not(.inline-flex):not([class*="bg-"]):not([class*="card"]):not([style*="text-decoration: none"]),
+.text-gray-200 a:not(.inline-flex):not([class*="bg-"]):not([class*="card"]):not([style*="text-decoration: none"]),
+.text-gray-300 a:not(.inline-flex):not([class*="bg-"]):not([class*="card"]):not([style*="text-decoration: none"]),
+.text-gray-400 a:not(.inline-flex):not([class*="bg-"]):not([class*="card"]):not([style*="text-decoration: none"]),
+footer a:not(.inline-flex):not([class*="bg-"]):not([class*="card"]):not([style*="text-decoration: none"]) {
+  color: #ffffff !important;
+  font-weight: 700 !important;
+  text-decoration: underline !important;
+  text-decoration-color: #ffffff !important;
+  text-decoration-thickness: 2px !important;
+  text-underline-offset: 3px !important;
+  transition: all 0.2s ease !important;
+}
+
+.text-gray-100
+  a:not(.inline-flex):not([class*="bg-"]):not([class*="card"]):not([style*="text-decoration: none"]):hover,
+.text-white a:not(.inline-flex):not([class*="bg-"]):not([class*="card"]):not([style*="text-decoration: none"]):hover,
+.text-gray-200
+  a:not(.inline-flex):not([class*="bg-"]):not([class*="card"]):not([style*="text-decoration: none"]):hover,
+.text-gray-300
+  a:not(.inline-flex):not([class*="bg-"]):not([class*="card"]):not([style*="text-decoration: none"]):hover,
+.text-gray-400
+  a:not(.inline-flex):not([class*="bg-"]):not([class*="card"]):not([style*="text-decoration: none"]):hover,
+footer a:not(.inline-flex):not([class*="bg-"]):not([class*="card"]):not([style*="text-decoration: none"]):hover {
+  color: var(--color-neutral) !important;
+  text-decoration-color: var(--color-neutral) !important;
+  text-decoration-thickness: 3px !important;
+}
+
+/* Exclude ServicesGrid card links from styling */
+[class*="ServicesGrid"] a,
+[class*="services-grid"] a,
+.grid a[class*="group"],
+.grid a[class*="card"] {
+  color: inherit !important;
+  font-weight: inherit !important;
+  text-decoration: none !important;
+}
+
+/* ============================================
+   ENHANCED CTA BUTTON STYLES
+   Make buttons stand out with animations and effects
+   ============================================ */
+
+/* Primary CTA Buttons - Dark background with white text */
+a[class*="bg-primary-dark"],
+button[class*="bg-primary-dark"] {
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 4px 14px 0 rgba(0, 0, 0, 0.25);
+  transition: all 0.3s ease;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+a[class*="bg-primary-dark"]:hover,
+button[class*="bg-primary-dark"]:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px 0 rgba(0, 0, 0, 0.35);
+}
+
+a[class*="bg-primary-dark"]:active,
+button[class*="bg-primary-dark"]:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.2);
+}
+
+/* Shimmer effect on hover */
+a[class*="bg-primary-dark"]::before,
+button[class*="bg-primary-dark"]::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.2),
+    transparent
+  );
+  transition: left 0.5s ease;
+}
+
+a[class*="bg-primary-dark"]:hover::before,
+button[class*="bg-primary-dark"]:hover::before {
+  left: 100%;
+}
+
+/* White CTA Buttons (on dark backgrounds) */
+a[class*="bg-white"][class*="text-primary-dark"],
+button[class*="bg-white"][class*="text-primary-dark"] {
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 4px 14px 0 rgba(255, 255, 255, 0.3);
+  transition: all 0.3s ease;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+a[class*="bg-white"][class*="text-primary-dark"]:hover,
+button[class*="bg-white"][class*="text-primary-dark"]:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px 0 rgba(255, 255, 255, 0.4);
+}
+
+/* Secondary/Outline Buttons */
+a[class*="border-2"],
+button[class*="border-2"] {
+  position: relative;
+  transition: all 0.3s ease;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+a[class*="border-2"]:hover,
+button[class*="border-2"]:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.15);
+}
+
+/* Pulse animation for primary CTAs */
+@keyframes pulse-shadow {
+  0%,
+  100% {
+    box-shadow: 0 4px 14px 0 rgba(0, 0, 0, 0.25);
+  }
+  50% {
+    box-shadow: 0 4px 20px 0 rgba(0, 0, 0, 0.35);
+  }
+}
+
+/* Apply subtle pulse to hero CTAs */
+section[class*="Hero"] a[class*="bg-primary-dark"],
+section[class*="Hero"] button[class*="bg-primary-dark"] {
+  animation: pulse-shadow 2s ease-in-out infinite;
+}
+
+/* Stop pulse on hover */
+section[class*="Hero"] a[class*="bg-primary-dark"]:hover,
+section[class*="Hero"] button[class*="bg-primary-dark"]:hover {
+  animation: none;
+}
+
+/* Enhanced focus states for accessibility */
+a[class*="bg-primary-dark"]:focus-visible,
+button[class*="bg-primary-dark"]:focus-visible,
+a[class*="bg-white"]:focus-visible,
+button[class*="bg-white"]:focus-visible,
+a[class*="border-2"]:focus-visible,
+button[class*="border-2"]:focus-visible {
+  outline: 3px solid rgba(170, 170, 170, 0.5);
+  outline-offset: 3px;
+}
+
+/* Mobile touch feedback */
+@media (hover: none) and (pointer: coarse) {
+  a[class*="bg-primary-dark"]:active,
+  button[class*="bg-primary-dark"]:active,
+  a[class*="bg-white"]:active,
+  button[class*="bg-white"]:active {
+    transform: scale(0.98);
+  }
+}
+
+/* ============================================
+   FLOATING BUTTON EXCEPTION
+   Exclude floating button from enhanced CTA styles
+   ============================================ */
+
+/* Reset floating button to use its own styles */
+#floating-cta-btn {
+  position: fixed !important;
+  overflow: visible !important;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3), 0 8px 10px -6px rgba(0, 0, 0, 0.2) !important;
+  animation: none !important;
+}
+
+#floating-cta-btn::before {
+  display: none !important;
+}
+
+#floating-cta-btn:hover {
+  transform: scale(1.05) !important;
+  box-shadow: 0 20px 35px -5px rgba(0, 0, 0, 0.4), 0 10px 15px -6px rgba(0, 0, 0, 0.3) !important;
+}

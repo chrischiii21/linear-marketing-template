@@ -1,0 +1,9 @@
+{
+  "enabled": true,
+  "title": "Ready to Grow Your Business?",
+  "description": "Get expert marketing strategies tailored for your business. Let's discuss how we can help you succeed.",
+  "buttonText": "Schedule Free Consultation",
+  "buttonHref": "/contact-us",
+  "image": "https://images.unsplash.com/photo-1552664730-d307ca884978?w=600&h=800&fit=crop&q=80",
+  "delay": 5
+}

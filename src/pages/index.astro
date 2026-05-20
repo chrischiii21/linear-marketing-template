@@ -1,0 +1,175 @@
+---
+import { getEntry } from "astro:content";
+import PageLayout from "~/layouts/PageLayout.astro";
+import Hero from "~/components/sections/Hero.astro";
+import ServicesGrid from "~/components/sections/ServicesGrid.astro";
+import ContentWithKeypoints from "~/components/sections/ContentWithKeypoints.astro";
+import ContentWithImage from "~/components/sections/ContentWithImage.astro";
+import BoostVisibility from "~/components/sections/BoostVisibility.astro";
+import CallToAction from "~/components/sections/CallToAction.astro";
+import FAQs from "~/components/sections/FAQs.astro";
+import MapSection from "~/components/sections/MapSection.astro";
+import { localizeData } from "~/lib/config";
+import { faqSchema } from "~/lib/schema";
+
+// Get homepage content from JSON
+const homeContent = await getEntry("pages", "home");
+if (!homeContent) throw new Error("Missing content entry: pages/home");
+const homeData = localizeData(homeContent.data);
+const sections = homeData.sections ?? [];
+
+// Helper to find section by name
+const getSection = (name: string) => sections.find((s) => s.section === name);
+// Helper to find section by name and order
+const getSectionByOrder = (name: string, order: number) => 
+  sections.find((s) => s.section === name && s.order === order);
+
+const heroSection = getSection("Hero");
+const servicesGridSection = getSection("ServicesGrid");
+const venueNetworkSection = getSectionByOrder("ContentWithKeypoints", 3);
+const boostVisibilitySection = getSection("BoostVisibility");
+const whyChooseUsSection = getSectionByOrder("ContentWithImage", 5);
+const ctaBannerSection = getSection("CTABanner");
+const faqsSection = getSection("FAQs");
+const mapSection = getSection("Map");
+const finalCTASection = getSection("FinalCTA");
+
+const pageSchemas = [
+  faqsSection?.faqs ? faqSchema(faqsSection.faqs) : null,
+].filter(Boolean);
+---
+
+<PageLayout metadata={homeData.metadata} schemas={pageSchemas}>
+  {
+    heroSection && (
+      <Hero
+        tagline={heroSection.eyebrow}
+        title={heroSection.title}
+        subtitle={heroSection.description}
+        image={heroSection.image}
+        actions={[
+          {
+            text: heroSection.ctaText || "Get Started",
+            href: heroSection.ctaLink || "/contact-us",
+            variant: "primary",
+          },
+        ]}
+      />
+    )
+  }
+
+  {
+    servicesGridSection && servicesGridSection.cards && (
+      <ServicesGrid
+        title={servicesGridSection.title}
+        description={servicesGridSection.description}
+        ctaText={servicesGridSection.ctaText}
+        ctaLink={servicesGridSection.ctaLink}
+        cards={servicesGridSection.cards}
+      />
+    )
+  }
+
+  {
+    venueNetworkSection && (
+      <ContentWithKeypoints
+        title={venueNetworkSection.title}
+        description={venueNetworkSection.description}
+        ctaText={venueNetworkSection.ctaText}
+        ctaLink={venueNetworkSection.ctaLink}
+        keyPoints={venueNetworkSection.keyPoints}
+        image={venueNetworkSection.image}
+      />
+    )
+  }
+
+  {
+    boostVisibilitySection && boostVisibilitySection.features && (
+      <BoostVisibility
+        title={boostVisibilitySection.title}
+        description={boostVisibilitySection.description}
+        image={boostVisibilitySection.image}
+        ctaText={boostVisibilitySection.ctaText}
+        ctaLink={boostVisibilitySection.ctaLink}
+        features={boostVisibilitySection.features}
+      />
+    )
+  }
+
+  {
+    whyChooseUsSection && whyChooseUsSection.section === "ContentWithImage" && (
+      <ContentWithImage
+        eyebrow={whyChooseUsSection.eyebrow}
+        title={whyChooseUsSection.title}
+        description={whyChooseUsSection.description}
+        ctaText={whyChooseUsSection.ctaText}
+        ctaLink={whyChooseUsSection.ctaLink}
+        image={whyChooseUsSection.image}
+        background={whyChooseUsSection.background}
+      />
+    )
+  }
+  {
+    whyChooseUsSection && whyChooseUsSection.section === "ContentWithKeypoints" && (
+      <ContentWithKeypoints
+        eyebrow={whyChooseUsSection.eyebrow}
+        title={whyChooseUsSection.title}
+        description={whyChooseUsSection.description}
+        ctaText={whyChooseUsSection.ctaText}
+        ctaLink={whyChooseUsSection.ctaLink}
+        keyPoints={whyChooseUsSection.keyPoints}
+        image={whyChooseUsSection.image}
+      />
+    )
+  }
+
+  {
+    ctaBannerSection && (
+      <CallToAction
+        title={ctaBannerSection.title}
+        subtitle={ctaBannerSection.description}
+        actions={[
+          {
+            text: ctaBannerSection.ctaText || "Get Started",
+            href: ctaBannerSection.ctaLink || "/contact-us",
+            variant: "primary",
+          },
+        ]}
+      />
+    )
+  }
+
+  {
+    faqsSection && faqsSection.faqs && (
+      <FAQs title={faqsSection.title} faqs={faqsSection.faqs} />
+    )
+  }
+
+  {
+    mapSection && (
+      <MapSection
+        title={mapSection.title}
+        description={mapSection.description}
+        locations={mapSection.locations}
+        mapUrl={mapSection.mapUrl}
+        viewMode={mapSection.viewMode}
+      />
+    )
+  }
+
+  {
+    finalCTASection && (
+      <CallToAction
+        title={finalCTASection.title}
+        subtitle={finalCTASection.description}
+        actions={[
+          {
+            text: finalCTASection.ctaText || "Get Started",
+            href: finalCTASection.ctaLink || "/contact-us",
+            variant: "primary",
+          },
+        ]}
+      />
+    )
+  }
+</PageLayout>

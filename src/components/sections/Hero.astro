@@ -1,0 +1,102 @@
+---
+interface Props {
+  title?: string;
+  subtitle?: string;
+  tagline?: string;
+  image?: string;
+  actions?: Array<{
+    text: string;
+    href: string;
+    variant?: 'primary' | 'secondary';
+  }>;
+}
+
+const {
+  title = 'Welcome to Your Brand',
+  subtitle = 'Elevate your business with our comprehensive marketing solutions',
+  tagline,
+  image,
+  actions = [],
+} = Astro.props;
+---
+
+<section class="relative py-20 md:py-32 overflow-hidden">
+  <!-- Background Image with Parallax (Desktop only) -->
+  {image && (
+    <div class="hidden md:block absolute inset-0 z-0" id="hero-bg">
+      <img 
+        src={image} 
+        alt="Hero background"
+        width="1920"
+        height="1080"
+        class="w-full h-[120%] object-cover blur-[2px]"
+        style="transform: translateY(0px);"
+        loading="eager"
+        fetchpriority="high"
+        decoding="async"
+      />
+      <!-- Dark Overlay -->
+      <div class="absolute inset-0 bg-black/75"></div>
+    </div>
+  )}
+  
+  <!-- Fallback gradient (mobile or no image) -->
+  <div class={`absolute inset-0 z-0 ${image ? 'md:hidden' : ''} bg-gradient-to-b from-neutral to-white`}></div>
+
+  <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-center max-w-3xl mx-auto">
+      {tagline && (
+        <p class={`font-bold text-sm uppercase tracking-wider mb-4 ${image ? 'md:text-white text-primary' : 'text-primary'}`}>
+          {tagline}
+        </p>
+      )}
+      
+      <h1 class={`text-4xl md:text-5xl lg:text-6xl font-bold mb-6 ${image ? 'md:text-white text-primary-dark' : 'text-primary-dark'}`}>
+        {title}
+      </h1>
+      
+      <p class={`text-xl mb-8 ${image ? 'md:text-gray-100 text-gray-600' : 'text-gray-600'}`} set:html={subtitle} />
+      
+      {actions.length > 0 && (
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+          {actions.map((action) => (
+            <a
+              href={action.href}
+              class={
+                action.variant === 'secondary'
+                  ? 'px-8 py-3 text-base font-medium rounded-lg border-2 border-primary-dark text-primary-dark hover:bg-primary-dark hover:text-white transition md:border-neutral md:text-neutral md:hover:bg-neutral md:hover:text-primary-dark'
+                  : 'px-8 py-3 text-base font-medium rounded-lg bg-primary-dark text-white hover:bg-black transition md:bg-neutral md:text-primary-dark md:hover:bg-white'
+              }
+            >
+              {action.text}
+            </a>
+          ))}
+        </div>
+      )}
+    </div>
+  </div>
+</section>
+
+<script>
+  function initParallax() {
+    const heroBg = document.getElementById('hero-bg');
+    if (!heroBg) return;
+
+    const img = heroBg.querySelector('img');
+    if (!img) return;
+
+    function handleScroll() {
+      const scrolled = window.scrollY;
+      const rate = scrolled * 0.5; // Parallax speed
+      img.style.transform = `translateY(${rate}px)`;
+    }
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+  }
+
+  // Initialize on page load
+  initParallax();
+  
+  // Re-initialize after view transitions
+  document.addEventListener('astro:after-swap', initParallax);
+</script>

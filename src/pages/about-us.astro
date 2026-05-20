@@ -1,0 +1,132 @@
+---
+import { getEntry } from "astro:content";
+import PageLayout from "~/layouts/PageLayout.astro";
+import Hero from "~/components/sections/Hero.astro";
+import ContentWithImage from "~/components/sections/ContentWithImage.astro";
+import FeaturesSection from "~/components/sections/FeaturesSection.astro";
+import FeaturesWithImage from "~/components/sections/FeaturesWithImage.astro";
+import CTALight from "~/components/sections/CTALight.astro";
+import { getPageTitle, localizeData, SITE_URL } from "~/lib/config";
+import { webPageSchema } from "~/lib/schema";
+
+// Get about-us content from JSON
+const aboutContent = await getEntry("pages", "about-us");
+const data = localizeData(aboutContent.data);
+const { sections } = data;
+
+// Sort sections by order
+const sortedSections = sections.sort(
+  (a: any, b: any) => (a.order || 0) - (b.order || 0)
+);
+
+const metadata = {
+  title: data.metadata?.title || getPageTitle(data.title),
+  description: data.metadata?.description || data.description,
+  keywords: data.metadata?.keywords,
+};
+
+const pageUrl = `${SITE_URL}/about-us`;
+const pageSchemas = [
+  webPageSchema({
+    url: pageUrl,
+    name: metadata.title || "About Us",
+    description: metadata.description,
+    type: "AboutPage",
+  }),
+];
+const breadcrumbs = [
+  { name: "Home", url: "/" },
+  { name: "About Us", url: "/about-us" },
+];
+---
+
+<PageLayout metadata={metadata} schemas={pageSchemas} breadcrumbs={breadcrumbs}>
+  {
+    sortedSections.map((section: any) => {
+      // Hero Section
+      if (section.section === "Hero") {
+        return (
+          <Hero
+            tagline={section.eyebrow}
+            title={section.title}
+            subtitle={section.description}
+            image={section.image}
+            actions={
+              section.ctaText && section.ctaLink
+                ? [
+                    {
+                      text: section.ctaText,
+                      href: section.ctaLink,
+                      variant: "primary",
+                    },
+                  ]
+                : []
+            }
+          />
+        );
+      }
+
+      // ContentWithImage Section
+      if (section.section === "ContentWithImage") {
+        return (
+          <ContentWithImage
+            title={section.title}
+            eyebrow={section.eyebrow}
+            description={section.description}
+            ctaText={section.ctaText}
+            ctaLink={section.ctaLink}
+            image={section.image}
+            imagePosition={section.imagePosition}
+            background={section.background}
+          />
+        );
+      }
+
+      // FeaturesSection
+      if (section.section === "FeaturesSection" && section.features) {
+        return (
+          <FeaturesSection
+            eyebrow={section.eyebrow}
+            title={section.title}
+            description={section.description}
+            features={section.features}
+            ctaText={section.ctaText}
+            ctaLink={section.ctaLink}
+          />
+        );
+      }
+
+      // FeaturesWithImage Section
+      if (section.section === "FeaturesWithImage" && section.features) {
+        return (
+          <FeaturesWithImage
+            eyebrow={section.eyebrow}
+            title={section.title}
+            description={section.description}
+            cards={section.features}
+            ctaText={section.ctaText}
+            ctaLink={section.ctaLink}
+            isCarousel={section.isCarousel}
+            itemsPerSlide={section.itemsPerSlide}
+            carouselAutoplay={section.carouselAutoplay}
+            carouselAutoplayDelay={section.carouselAutoplayDelay}
+          />
+        );
+      }
+
+      // CTALight Section
+      if (section.section === "CTALight") {
+        return (
+          <CTALight
+            title={section.title}
+            description={section.description}
+            ctaText={section.ctaText || "Get in Touch"}
+            ctaLink={section.ctaLink || "/contact-us"}
+          />
+        );
+      }
+
+      return null;
+    })
+  }
+</PageLayout>

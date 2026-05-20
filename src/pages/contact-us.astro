@@ -1,0 +1,122 @@
+---
+import { getEntry } from "astro:content";
+import PageLayout from "~/layouts/PageLayout.astro";
+import Hero from "~/components/sections/Hero.astro";
+import FeaturesSection from "~/components/sections/FeaturesSection.astro";
+import FormSection from "~/components/sections/FormSection.astro";
+import MapSection from "~/components/sections/MapSection.astro";
+import CTALight from "~/components/sections/CTALight.astro";
+import { getPageTitle, localizeData, SITE_URL } from "~/lib/config";
+import { contactPageSchema } from "~/lib/schema";
+
+// Get contact-us content from JSON
+const contactContent = await getEntry("pages", "contact-us");
+const data = localizeData(contactContent.data);
+const { sections } = data;
+
+// Sort sections by order
+const sortedSections = sections.sort(
+  (a: any, b: any) => (a.order || 0) - (b.order || 0)
+);
+
+const metadata = {
+  title: data.metadata?.title || getPageTitle(data.title),
+  description: data.metadata?.description || data.description,
+  keywords: data.metadata?.keywords,
+};
+
+const pageUrl = `${SITE_URL}/contact-us`;
+const pageSchemas = [
+  contactPageSchema(pageUrl, metadata.title || "Contact Us", metadata.description),
+];
+const breadcrumbs = [
+  { name: "Home", url: "/" },
+  { name: "Contact Us", url: "/contact-us" },
+];
+---
+
+<PageLayout metadata={metadata} schemas={pageSchemas} breadcrumbs={breadcrumbs}>
+  {
+    sortedSections.map((section: any) => {
+      // Hero Section
+      if (section.section === "Hero") {
+        return (
+          <Hero
+            tagline={section.eyebrow}
+            title={section.title}
+            subtitle={section.description}
+            image={section.image}
+            actions={
+              section.ctaText && section.ctaLink
+                ? [
+                    {
+                      text: section.ctaText,
+                      href: section.ctaLink,
+                      variant: "primary",
+                    },
+                  ]
+                : []
+            }
+          />
+        );
+      }
+
+      // FeaturesSection
+      if (section.section === "FeaturesSection" && section.features) {
+        return (
+          <FeaturesSection
+            eyebrow={section.eyebrow}
+            title={section.title}
+            description={section.description}
+            features={section.features}
+            ctaText={section.ctaText}
+            ctaLink={section.ctaLink}
+          />
+        );
+      }
+
+      // FormSection
+      if (section.section === "FormSection" && section.formFields) {
+        return (
+          <FormSection
+            title={section.title}
+            subtitle={section.eyebrow}
+            description={section.description}
+            fields={section.formFields}
+            submitText={section.submitText}
+            submitAction={section.submitAction}
+            background={section.background}
+            contactInfo={section.contactInfo}
+          />
+        );
+      }
+
+      // Map Section
+      if (section.section === "Map") {
+        return (
+          <MapSection
+            title={section.title}
+            description={section.description}
+            locations={section.locations}
+            mapUrl={section.mapUrl}
+            viewMode={section.viewMode}
+          />
+        );
+      }
+
+      // CTALight Section
+      if (section.section === "CTALight") {
+        return (
+          <CTALight
+            title={section.title}
+            description={section.description}
+            ctaText={section.ctaText || "Get in Touch"}
+            ctaLink={section.ctaLink || "/contact-us"}
+          />
+        );
+      }
+
+      return null;
+    })
+  }
+</PageLayout>

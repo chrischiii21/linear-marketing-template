@@ -1,0 +1,141 @@
+---
+interface Props {
+  title?: string;
+  eyebrow?: string;
+  description?: string;
+  ctaText?: string;
+  ctaLink?: string;
+  videoUrl: string; // Direct video URL (required)
+  videoPosition?: "left" | "right";
+  background?: string;
+  poster?: string; // Optional poster/thumbnail
+  autoplay?: boolean;
+  muted?: boolean;
+  loop?: boolean;
+  controls?: boolean;
+}
+
+const {
+  title,
+  eyebrow,
+  description,
+  ctaText,
+  ctaLink,
+  videoUrl,
+  videoPosition = "right",
+  background,
+  poster,
+  autoplay = false,
+  muted = false,
+  loop = false,
+  controls = true,
+} = Astro.props;
+
+// Handle background
+let bgClass = "";
+let bgStyle = "";
+let isDarkBg = false;
+
+if (background) {
+  if (background === "gray") {
+    bgClass = "bg-gray-50";
+  } else if (background === "white") {
+    bgClass = "bg-white";
+  } else if (background === "primary-dark") {
+    bgStyle = "background-color: var(--color-primary-dark)";
+    isDarkBg = true;
+  } else if (background === "primary") {
+    bgStyle = "background-color: var(--color-primary)";
+    isDarkBg = false;
+  } else if (background === "primary-light") {
+    bgStyle = "background-color: var(--color-primary-light)";
+    isDarkBg = false;
+  } else if (background.startsWith("#") || background.startsWith("rgb")) {
+    bgStyle = `background-color: ${background}`;
+    isDarkBg = true;
+  } else if (background.startsWith("bg-")) {
+    bgClass = background;
+    isDarkBg =
+      background.includes("primary") ||
+      background.includes("gray-8") ||
+      background.includes("gray-9") ||
+      background.includes("black");
+  } else {
+    bgClass = "bg-white";
+  }
+} else {
+  bgClass = "bg-white";
+}
+
+const textColorClass = isDarkBg ? "text-white" : "text-gray-900";
+const subtextColorClass = isDarkBg ? "text-gray-100" : "text-gray-600";
+const eyebrowColorClass = isDarkBg ? "text-primary-lighter" : "text-primary-dark";
+
+// Debug log
+console.log("ContentWithVideo - videoUrl:", videoUrl);
+---
+
+<section
+  class={`py-12 sm:py-16 md:py-24 ${bgClass}`}
+  style={bgStyle || undefined}
+>
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
+      <!-- Content Column -->
+      <div class={videoPosition === "left" ? "lg:order-2" : "lg:order-1"}>
+        {
+          eyebrow && (
+            <p
+              class={`${eyebrowColorClass} font-semibold text-xs sm:text-sm uppercase tracking-wide mb-3 sm:mb-4`}
+            >
+              {eyebrow}
+            </p>
+          )
+        }
+        {
+          title && (
+            <h2
+              class={`text-2xl sm:text-3xl md:text-4xl font-bold ${textColorClass} mb-4 sm:mb-6`}
+            >
+              {title}
+            </h2>
+          )
+        }
+        {
+          description && (
+            <p class={`text-base sm:text-lg ${subtextColorClass} mb-6 sm:mb-8`} set:html={description} />
+          )
+        }
+        {
+          ctaText && ctaLink && (
+            <a
+              href={ctaLink}
+              class="inline-flex items-center justify-center px-6 py-3 sm:px-8 sm:py-4 bg-primary-dark text-white font-medium rounded-lg hover:bg-black transition text-sm sm:text-base"
+            >
+              {ctaText}
+            </a>
+          )
+        }
+      </div>
+
+      <!-- Video Column -->
+      <div
+        class={`relative overflow-hidden rounded-lg shadow-lg ${videoPosition === "left" ? "lg:order-1" : "lg:order-2"}`}
+      >
+        <video
+          src={videoUrl}
+          class="w-full h-auto aspect-video bg-black"
+          controls
+          playsinline
+          preload="metadata"
+          autoplay={autoplay}
+          muted={muted}
+          loop={loop}
+          poster={poster}
+        >
+          Your browser does not support the video tag.
+        </video>
+      </div>
+    </div>
+  </div>
+</section>
