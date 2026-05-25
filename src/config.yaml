@@ -1,5 +1,5 @@
 site:
-  name: Dealer Template
+  name: Linear Marketing
   site: "https://ntv-template-1.vercel.app"
   base: "/"
   trailingSlash: false
@@ -23,22 +23,22 @@ social:
 # Default SEO metadata
 metadata:
   title:
-    default: Dealer Template
-    template: "%s, DT"
-  description: "We are a local marketing company in Rockwall, Texas. Premium marketing solutions including website design, social media management, and indoor billboard advertising."
+    default: "Denver Digital Signage & Marketing | Linear Marketing"
+    template: "%s | Linear Marketing"
+  description: "We connect businesses in Denver through digital signage, PPC, social media, SEO, and website design to keep brands visible and top of mind."
   robots:
     index: true
     follow: true
   openGraph:
-    site_name: Dealer Template
+    site_name: Linear Marketing
     images:
       - url: "~/assets/images/default.png"
         width: 1200
         height: 628
     type: website
   twitter:
-    handle: "@dealertemplate"
-    site: "@dealertemplate"
+    handle: "@linearmarketing"
+    site: "@linearmarketing"
     cardType: summary_large_image
 
 # Legal pages
