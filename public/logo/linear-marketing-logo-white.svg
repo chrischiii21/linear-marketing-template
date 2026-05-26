@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 446 110" role="img" aria-label="Linear Marketing">
+  <title>Linear Marketing</title>
+
+  <!-- Mark: stacked ascending bars suggesting linear growth -->
+  <g transform="translate(8 18)">
+    <rect x="0"  y="48" width="14" height="26" rx="2" fill="#FFFFFF"/>
+    <rect x="20" y="30" width="14" height="44" rx="2" fill="#FFFFFF"/>
+    <rect x="40" y="8"  width="14" height="66" rx="2" fill="#F5BF3A"/>
+    <path d="M2 60 L54 12" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round" fill="none"/>
+    <path d="M54 12 L46 11 M54 12 L53 20" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round" fill="none"/>
+  </g>
+
+  <!-- Wordmark -->
+  <g transform="translate(96 0)" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif">
+    <text x="0" y="58" font-size="40" font-weight="700" letter-spacing="1.5" fill="#FFFFFF">LINEAR</text>
+    <text x="0" y="92" font-size="22" font-weight="500" letter-spacing="6" fill="#FFFFFF" opacity="0.9">MARKETING</text>
+    <rect x="0" y="66" width="148" height="3" rx="1.5" fill="#F5BF3A"/>
+  </g>
+</svg>

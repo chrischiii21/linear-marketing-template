@@ -23,7 +23,7 @@
     "quaternary": "#ffffff"
   },
   "logo": {
-    "src": "/images/logo/dealer-logo.avif",
+    "src": "/logo/linear-marketing-logo.svg",
     "alt": "Linear Marketing Logo"
   },
   "social": {
@@ -39,7 +39,7 @@
     "defaultDescription": "We connect businesses in Denver through digital signage, PPC, social media, SEO, and website design to keep brands visible and top of mind.",
     "keywords": "Denver marketing agency, digital marketing Denver, marketing services Denver CO, indoor billboard advertising, social media management, website design Denver, PPC advertising, Google Business Profile, local marketing Denver",
     "siteUrl": "https://ntv-template-1.vercel.app",
-    "ogImage": "/images/logo/dealer-logo.avif",
+    "ogImage": "/logo/linear-marketing-logo.svg",
     "twitterHandle": "@linearmarketing"
   },
   "analytics": {

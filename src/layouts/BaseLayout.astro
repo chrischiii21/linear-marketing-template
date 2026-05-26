@@ -35,7 +35,7 @@ const {
 // Construct full URL for canonical and OG tags
 const siteUrl = SITE_URL;
 const currentUrl = canonical || new URL(Astro.url.pathname, siteUrl).href;
-const ogImage = image || `${siteUrl}/images/logo/dealer-logo.png`;
+const ogImage = image || `${siteUrl}/logo/linear-marketing-logo.svg`;
 
 // Build the JSON-LD graph: global entities + auto WebPage + optional breadcrumbs + per-page schemas
 const autoWebPage = webPageSchema({
@@ -73,9 +73,9 @@ const allSchemas: unknown[] = [
     {/* Preload critical logo image */}
     <link
       rel="preload"
-      href="/logo/dealer-logo.avif"
+      href="/logo/linear-marketing-logo.svg"
       as="image"
-      type="image/avif"
+      type="image/svg+xml"
       fetchpriority="high"
     />
 

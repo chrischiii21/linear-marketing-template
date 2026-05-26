@@ -52,7 +52,7 @@ integrations:
 
 # Popup modal defaults
 popup:
-  image: "https://images.unsplash.com/photo-1552664730-d307ca884978?w=600&h=800&fit=crop&q=80"
+  image: "/images/home.avif"
   badge: "Limited Time Offer"
   headline: "Ready to Grow Your Business?"
   description: "Get expert marketing strategies tailored for your business. Let's discuss how we can help you succeed."

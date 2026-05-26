@@ -77,8 +77,21 @@ const {
 
       <!-- Right Side - Content -->
       <div class="w-full md:w-3/5 px-8 md:px-10 py-10 md:py-12 flex flex-col justify-center space-y-6">
+        <!-- Logo -->
+        <div class="flex justify-center mb-4 md:mb-6 pl-16 md:pl-24">
+          <img
+            src="/logo/linear-marketing-logo.svg"
+            alt="Linear Marketing"
+            width="220"
+            height="58"
+            class="h-16 md:h-20 w-auto"
+            loading="lazy"
+            decoding="async"
+          />
+        </div>
+
         <!-- Headline -->
-        <div class="space-y-3">
+        <div class="space-y-3 text-center">
           <h4 class="text-2xl md:text-3xl font-bold text-gray-900 leading-tight">
             {popupHeadline}
           </h4>
@@ -136,7 +149,7 @@ const {
 <!-- Floating CTA Button - Icon only on mobile -->
 <button
   id="floating-cta-btn"
-  class="fixed bottom-6 right-6 z-40 md:px-6 md:py-3 p-4 bg-primary-dark text-white font-bold text-sm rounded-full shadow-2xl hover:bg-primary-lighter hover:scale-105 transition-all duration-300 flex items-center gap-2 group"
+  class="fixed bottom-6 right-6 z-40 md:px-6 md:py-3 p-4 bg-primary-dark text-white font-bold text-sm rounded-lg shadow-2xl hover:bg-primary-lighter hover:scale-105 transition-all duration-300 flex items-center gap-2 group"
   aria-label={floatingButtonText}
 >
   <svg class="w-5 h-5 md:w-5 md:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">

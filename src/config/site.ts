@@ -44,8 +44,8 @@ export const siteConfig = {
 
   // Logo
   logo: {
-    src: siteData.logo?.src || "/images/logo/dealer-logo.avif",
-    alt: siteData.logo?.alt || "Dealer Template Logo",
+    src: siteData.logo?.src || "/logo/linear-marketing-logo.svg",
+    alt: siteData.logo?.alt || "Linear Marketing Logo",
   },
 
   // Social Media (optional)
