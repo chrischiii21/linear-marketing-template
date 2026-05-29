@@ -1,6 +1,6 @@
 site:
   name: Linear Marketing
-  site: "https://ntv-template-1.vercel.app"
+  site: "https://linear-marketing-template.vercel.app"
   base: "/"
   trailingSlash: false
 

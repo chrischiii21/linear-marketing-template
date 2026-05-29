@@ -63,7 +63,7 @@ export const siteConfig = {
     defaultTitle: siteData.seo?.defaultTitle || "Dealer Template | Digital Marketing in Denver",
     defaultDescription: siteData.seo?.defaultDescription || "Denver marketing agency: web design, social media, indoor billboards & PPC.",
     keywords: siteData.seo?.keywords || "Denver marketing agency, digital marketing Denver",
-    siteUrl: siteData.seo?.siteUrl || "https://ntv-template-1.vercel.app",
+    siteUrl: siteData.seo?.siteUrl || "https://linear-marketing-template.vercel.app",
     ogImage: siteData.seo?.ogImage || "/favicon.svg",
     twitterHandle: siteData.seo?.twitterHandle || "@dealertemplate",
   },
