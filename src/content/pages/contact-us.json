@@ -22,19 +22,19 @@
         {
           "icon": "tabler:phone",
           "label": "Phone",
-          "value": "(909)-325-7576",
-          "link": "tel:+19093257576"
+          "value": "{phoneFormatted}",
+          "link": "tel:{phone}"
         },
         {
           "icon": "tabler:mail",
           "label": "Email",
-          "value": "info@linktothrive.com",
-          "link": "mailto:info@linktothrive.com"
+          "value": "{email}",
+          "link": "mailto:{email}"
         },
         {
           "icon": "tabler:map-pin",
           "label": "Location",
-          "value": "{city}, California",
+          "value": "{city}, {stateFull}",
           "link": ""
         }
       ],

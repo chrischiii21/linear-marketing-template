@@ -1,10 +1,10 @@
----
+﻿---
 import type { MetaData } from "~/types";
 import { ClientRouter } from "astro:transitions";
 import Header from "~/components/widgets/Header.astro";
 import Footer from "~/components/widgets/Footer.astro";
 import PopupModal from "~/components/widgets/PopupModal.astro";
-import { SITE_NAME, SITE_URL } from "~/lib/config";
+import { SITE_NAME, SITE_URL, siteConfig } from "~/config/site";
 import {
   organizationSchema,
   webSiteSchema,
@@ -35,7 +35,7 @@ const {
 // Construct full URL for canonical and OG tags
 const siteUrl = SITE_URL;
 const currentUrl = canonical || new URL(Astro.url.pathname, siteUrl).href;
-const ogImage = image || `${siteUrl}/logo/linear-marketing-logo.svg`;
+const ogImage = image || `${siteUrl}${siteConfig.seo.ogImage}`;
 
 // Build the JSON-LD graph: global entities + auto WebPage + optional breadcrumbs + per-page schemas
 const autoWebPage = webPageSchema({
@@ -73,7 +73,7 @@ const allSchemas: unknown[] = [
     {/* Preload critical logo image */}
     <link
       rel="preload"
-      href="/logo/linear-marketing-logo.svg"
+      href={siteConfig.logo.src}
       as="image"
       type="image/svg+xml"
       fetchpriority="high"
@@ -112,7 +112,7 @@ const allSchemas: unknown[] = [
     {description && <meta name="twitter:description" content={description} />}
     <meta name="twitter:image" content={ogImage} />
     
-    {/* Structured Data — emitted as separate JSON-LD blocks for clarity */}
+    {/* Structured Data â€” emitted as separate JSON-LD blocks for clarity */}
     {allSchemas.map((s) => (
       <script type="application/ld+json" is:inline set:html={JSON.stringify(s)} />
     ))}

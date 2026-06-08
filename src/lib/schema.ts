@@ -17,12 +17,13 @@ import {
   SOCIAL_FACEBOOK,
   SOCIAL_INSTAGRAM,
   SOCIAL_YOUTUBE,
-} from "./config";
+  siteConfig,
+} from "../config/site";
 
 const ORG_ID = `${SITE_URL}/#organization`;
 const WEBSITE_ID = `${SITE_URL}/#website`;
 const LOCAL_BUSINESS_ID = `${SITE_URL}/#localbusiness`;
-const LOGO_URL = `${SITE_URL}/logo/linear-marketing-logo.svg`;
+const LOGO_URL = `${SITE_URL}${siteConfig.logo.src}`;
 
 const stripE164 = (raw: string) => {
   const digits = (raw || "").replace(/\D/g, "");

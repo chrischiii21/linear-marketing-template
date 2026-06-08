@@ -1,7 +1,7 @@
----
+﻿---
 import { Icon } from "astro-icon/components";
 import { navItems, ctaButton } from "~/config/navigation";
-import { SITE_NAME } from "~/lib/config";
+import { siteConfig } from "~/config/site";
 import ToggleMenu from "../ui/ToggleMenu.astro";
 
 // Convert new navigation structure to format expected by template
@@ -127,8 +127,8 @@ const actions = ctaButton ? [ctaButton] : [];
         <a href="/" class="flex items-center">
           <img
             id="header-logo"
-            src="/logo/linear-marketing-logo.svg"
-            alt={SITE_NAME}
+            src={siteConfig.logo.src}
+            alt={siteConfig.logo.alt}
             width="84"
             height="84"
             class="h-12 w-auto transition-all duration-300"

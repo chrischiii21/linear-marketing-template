@@ -1,5 +1,5 @@
----
-import { POPUP_CONFIG } from "~/lib/config";
+﻿---
+import { POPUP_CONFIG, siteConfig } from "~/config/site";
 
 interface Props {
   title?: string;
@@ -80,8 +80,8 @@ const {
         <!-- Logo -->
         <div class="flex justify-center mb-4 md:mb-6 pl-16 md:pl-24">
           <img
-            src="/logo/linear-marketing-logo.svg"
-            alt="Linear Marketing"
+            src={siteConfig.logo.src}
+            alt={siteConfig.logo.alt}
             width="220"
             height="58"
             class="h-16 md:h-20 w-auto"

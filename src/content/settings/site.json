@@ -3,11 +3,12 @@
     "name": "Linear Marketing",
     "fullName": "Linear Marketing",
     "tagline": "Your trusted partner for comprehensive digital marketing solutions, from custom website design and SEO to indoor billboard advertising and targeted campaigns that deliver real results.",
-    "description": "We are a local marketing company in Denver, Colorado. Premium marketing solutions including website design, social media management, and indoor billboard advertising."
+    "description": "We are a local marketing company in {city}, {state}. Premium marketing solutions including website design, social media management, and indoor billboard advertising."
   },
   "location": {
     "city": "Denver",
-    "state": "Colorado",
+    "state": "CO",
+    "stateFull": "Colorado",
     "address": "Denver, CO",
     "fullAddress": "Denver, CO"
   },
@@ -17,13 +18,14 @@
     "phoneFormatted": "555-555-5555"
   },
   "colors": {
-    "primary": "#0D2A63",
-    "secondary": "#F5BF3A",
-    "tertiary": "#DDAE05",
-    "quaternary": "#ffffff"
+    "primary": "#aaaaaa",
+    "secondary": "#cccccc",
+    "tertiary": "#888888",
+    "quaternary": "#f2eedf"
   },
   "logo": {
     "src": "/logo/linear-marketing-logo.svg",
+    "whiteSrc": "/logo/linear-marketing-logo-white.svg",
     "alt": "Linear Marketing Logo"
   },
   "social": {
@@ -36,11 +38,39 @@
   "seo": {
     "siteName": "Linear Marketing",
     "defaultTitle": "Denver Digital Signage & Marketing | Linear Marketing",
+    "titleTemplate": "%s | Linear Marketing",
     "defaultDescription": "We connect businesses in Denver through digital signage, PPC, social media, SEO, and website design to keep brands visible and top of mind.",
     "keywords": "Denver marketing agency, digital marketing Denver, marketing services Denver CO, indoor billboard advertising, social media management, website design Denver, PPC advertising, Google Business Profile, local marketing Denver",
     "siteUrl": "https://linear-marketing-template.vercel.app",
     "ogImage": "/logo/linear-marketing-logo.svg",
     "twitterHandle": "@linearmarketing"
+  },
+  "legal": {
+    "lastUpdated": "November 20, 2025"
+  },
+  "integrations": {
+    "googleMapsEmbedUrl": "https://www.google.com/maps/d/embed?mid=1Du4Ri3H-5dYTnwxgl-Cutssuy9yJYZWT&ehbc=2E312F",
+    "recaptchaSiteKey": "6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI"
+  },
+  "popup": {
+    "image": "/images/home.avif",
+    "badge": "Limited Time Offer",
+    "headline": "Ready to Grow Your Business?",
+    "description": "Get expert marketing strategies tailored for your business. Let's discuss how we can help you succeed.",
+    "benefits": [
+      "Free 30-minute strategy session",
+      "Custom campaign recommendations",
+      "No commitment or pressure"
+    ],
+    "trustIndicators": [
+      "Trusted Experts",
+      "Proven Results"
+    ],
+    "dismissText": "No thanks, I'll browse first",
+    "floatingButtonText": "Ask for a Free Scan"
+  },
+  "cta": {
+    "backgroundImage": "/images/home.avif"
   },
   "analytics": {
     "googleAnalyticsId": ""

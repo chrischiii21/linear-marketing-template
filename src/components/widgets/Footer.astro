@@ -1,4 +1,4 @@
----
+﻿---
 import { Icon } from "astro-icon/components";
 import { footerConfig } from "~/config/navigation";
 import {
@@ -11,7 +11,9 @@ import {
   SOCIAL_FACEBOOK,
   SOCIAL_INSTAGRAM,
   SOCIAL_YOUTUBE,
-} from "~/lib/config";
+  GOOGLE_MAPS_VIEW_URL,
+  siteConfig,
+} from "~/config/site";
 
 // Adapt new footer structure to old format for compatibility
 // Convert the new column structure to the old links structure
@@ -82,8 +84,8 @@ const currentYear = new Date().getFullYear();
       <div class="lg:col-span-2">
         <a href="/" class="hidden md:inline-block mb-6 group">
           <img
-            src="/logo/linear-marketing-logo-white.svg"
-            alt={SITE_NAME}
+            src={siteConfig.logo.whiteSrc}
+            alt={siteConfig.logo.alt}
             class="h-16 w-auto transition-transform group-hover:scale-105"
             width="240"
             height="64"
@@ -205,7 +207,23 @@ const currentYear = new Date().getFullYear();
               </div>
             ) : section.type === "contact" ? (
               <div class="text-sm space-y-2">
-                {COMPANY_CITY && <p class="text-white">{COMPANY_CITY}</p>}
+                {COMPANY_CITY && (
+                  <p>
+                    {GOOGLE_MAPS_VIEW_URL ? (
+                      <a
+                        href={GOOGLE_MAPS_VIEW_URL}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="text-white hover:text-primary-light transition"
+                        style="text-decoration: none; font-weight: normal;"
+                      >
+                        {COMPANY_CITY}
+                      </a>
+                    ) : (
+                      <span class="text-white">{COMPANY_CITY}</span>
+                    )}
+                  </p>
+                )}
                 {COMPANY_PHONE && (
                   <p>
                     <a href={`tel:${COMPANY_PHONE.replace(/\D/g, "")}`} class="text-white hover:text-primary-light transition" style="text-decoration: none; font-weight: normal;">
@@ -273,7 +291,7 @@ const currentYear = new Date().getFullYear();
               <span set:html={footNote} />
             ) : (
               <span>
-                © {currentYear} {SITE_NAME}. All rights reserved.
+                Â© {currentYear} {SITE_NAME}. All rights reserved.
               </span>
             )
           }

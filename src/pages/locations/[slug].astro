@@ -9,7 +9,7 @@ import CTALight from "~/components/sections/CTALight.astro";
 import FeaturesSection from "~/components/sections/FeaturesSection.astro";
 import FeaturesWithImage from "~/components/sections/FeaturesWithImage.astro";
 import Map from "~/components/sections/MapSection.astro";
-import { getPageTitle, localizeData, SITE_URL } from "~/lib/config";
+import { getPageTitle, localizeData, SITE_URL } from "~/config/site";
 import { locationBusinessSchema, faqSchema } from "~/lib/schema";
 
 export async function getStaticPaths() {
@@ -25,7 +25,21 @@ type Props = {
 };
 
 const { entry } = Astro.props;
-const data = localizeData(entry.data);
+
+// First swap {location} (this page's own city) everywhere, then apply the
+// global {city}/{state}/{business}/... tokens via localizeData.
+const locName = entry.data.location || "";
+const swapLocation = (v: any): any => {
+  if (typeof v === "string") return v.replaceAll("{location}", locName);
+  if (Array.isArray(v)) return v.map(swapLocation);
+  if (v && typeof v === "object") {
+    return Object.fromEntries(
+      Object.entries(v).map(([k, x]) => [k, swapLocation(x)])
+    );
+  }
+  return v;
+};
+const data = localizeData(swapLocation(entry.data));
 
 const sections = (data.sections || []).sort(
   (a: any, b: any) => (a.order || 0) - (b.order || 0)

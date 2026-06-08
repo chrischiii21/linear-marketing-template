@@ -1,6 +1,6 @@
 {
-  "title": "Marketing Services in Aurora",
-  "description": "Full-service digital marketing agency serving Aurora businesses. From website design to social media, we help local businesses grow.",
+  "title": "Marketing Services in {location}",
+  "description": "Full-service digital marketing agency serving {location} businesses. From website design to social media, we help local businesses grow.",
   "location": "Aurora",
   "ctaText": "Get Started",
   "ctaLink": "/contact-us",
@@ -8,8 +8,8 @@
     {
       "section": "Hero",
       "eyebrow": "Premium Marketing Solutions",
-      "title": "Local Advertising and Digital Marketing Pros in Aurora, CO",
-      "description": "Helping Aurora Businesses Get Noticed, On Screens and Online",
+      "title": "Local Advertising and Digital Marketing Pros in {location}, {state}",
+      "description": "Helping {location} Businesses Get Noticed, On Screens and Online",
       "ctaText": "Contact our advertising experts",
       "ctaLink": "/contact-us",
       "image": "/images/aurora.avif",
@@ -17,15 +17,15 @@
     },
     {
       "section": "ContentWithImage",
-      "title": "Your Local Marketing Partner in Aurora",
-      "description": "We're a full-service digital marketing agency dedicated to helping Aurora businesses succeed online. Whether you need a new website, social media management, or advertising campaigns, we provide personalized strategies that deliver real results. We understand the local market and know what it takes to stand out in Aurora and the greater Denver area.",
+      "title": "Your Local Marketing Partner in {location}",
+      "description": "We're a full-service digital marketing agency dedicated to helping {location} businesses succeed online. Whether you need a new website, social media management, or advertising campaigns, we provide personalized strategies that deliver real results. We understand the local market and know what it takes to stand out in {location} and the greater {city} area.",
       "image": "/images/aurora.avif",
       "order": 2
     },
     {
       "section": "Benefits",
-      "title": "Digital Marketing Experts Near You Serving Aurora",
-      "description": "Looking to grow your business in Aurora? Our local digital marketing agency specializes in helping businesses stand out through targeted strategies that drive results. Whether you're looking to increase foot traffic, grow your online presence, or run high-converting ad campaigns, we offer tailored solutions backed by experience and data.",
+      "title": "Digital Marketing Experts Near You Serving {location}",
+      "description": "Looking to grow your business in {location}? Our local digital marketing agency specializes in helping businesses stand out through targeted strategies that drive results. Whether you're looking to increase foot traffic, grow your online presence, or run high-converting ad campaigns, we offer tailored solutions backed by experience and data.",
       "order": 3,
       "benefits": [
         {
@@ -58,13 +58,13 @@
         },
         {
           "title": "Competitive edge over local businesses without a strategy",
-          "description": "Stay ahead by leveraging a full-service digital marketing approach tailored for Aurora businesses."
+          "description": "Stay ahead by leveraging a full-service digital marketing approach tailored for {location} businesses."
         }
       ]
     },
     {
       "section": "CTALight",
-      "title": "Ready to Grow Your Aurora Business?",
+      "title": "Ready to Grow Your {location} Business?",
       "description": "Whether you're a startup or an established business, we have the marketing solutions to help you reach more customers and increase sales. Let's talk about your goals and create a strategy that works for your budget.",
       "order": 4,
       "ctaText": "Schedule a Free Consultation",
@@ -72,7 +72,7 @@
     },
     {
       "section": "FeaturesSection",
-      "title": "Marketing Services for Aurora Businesses",
+      "title": "Marketing Services for {location} Businesses",
       "description": "Comprehensive digital marketing solutions tailored to your business needs.",
       "order": 5,
       "features": [
@@ -93,7 +93,7 @@
         },
         {
           "title": "SEO & Local Search",
-          "description": "Rank higher in Google search results and attract more local customers searching for your services in Aurora.",
+          "description": "Rank higher in Google search results and attract more local customers searching for your services in {location}.",
           "icon": "tabler:search"
         },
         {
@@ -110,7 +110,7 @@
     },
     {
       "section": "FeaturesWithImage",
-      "title": "How We Work With Chino Hills Businesses",
+      "title": "How We Work With {location} Businesses",
       "description": "Our proven process ensures you get results without the hassle.",
       "order": 6,
       "features": [
@@ -142,13 +142,13 @@
     },
     {
       "section": "FeaturesSection",
-      "title": "Why Aurora Businesses Choose Us",
+      "title": "Why {location} Businesses Choose Us",
       "description": "We're more than just a marketing agency, we're your partner in growth.",
       "order": 7,
       "features": [
         {
           "title": "Local Expertise",
-          "description": "We understand the Aurora market and know what it takes to reach local customers effectively.",
+          "description": "We understand the {location} market and know what it takes to reach local customers effectively.",
           "icon": "tabler:map-pin"
         },
         {
@@ -181,12 +181,12 @@
     {
       "section": "FAQs",
       "title": "Common Questions About Our Services",
-      "description": "Get answers to the most common questions Aurora businesses ask us.",
+      "description": "Get answers to the most common questions {location} businesses ask us.",
       "order": 8,
       "faqs": [
         {
-          "question": "Do you only work with businesses in Aurora?",
-          "answer": "While we specialize in serving Aurora businesses, we work with clients throughout the Denver metro area and beyond."
+          "question": "Do you only work with businesses in {location}?",
+          "answer": "While we specialize in serving {location} businesses, we work with clients throughout the {city} metro area and beyond."
         },
         {
           "question": "What types of businesses do you work with?",
@@ -212,8 +212,8 @@
     },
     {
       "section": "Map",
-      "title": "Serving Aurora and Surrounding Areas",
-      "description": "We're proud to serve businesses throughout the Denver metro area",
+      "title": "Serving {location} and Surrounding Areas",
+      "description": "We're proud to serve businesses throughout the {city} metro area",
       "order": 9,
       "viewMode": "full",
       "mapUrl": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d98134.93708439223!2d-104.89920979746093!3d39.72946682145779!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x876c63f7e8e6b5e7%3A0x5a8e8e8e8e8e8e8e!2sAurora%2C%20CO%2C%20USA!5e0!3m2!1sen!2sph!4v1763534588820!5m2!1sen!2sph",
@@ -242,9 +242,9 @@
     }
   ],
   "metadata": {
-    "title": "Aurora CO Digital Signage & Marketing | {business}",
-    "description": "We connect businesses in Aurora CO through digital signage, PPC, social media, SEO, and website design to keep brands visible and top of mind.",
-    "keywords": "marketing agency Aurora CO, digital marketing Aurora, Aurora marketing services, social media management Aurora, website design Aurora, SEO Aurora Colorado, PPC advertising Aurora, local marketing Aurora",
+    "title": "{location} {state} Digital Signage & Marketing | {business}",
+    "description": "We connect businesses in {location} {state} through digital signage, PPC, social media, SEO, and website design to keep brands visible and top of mind.",
+    "keywords": "marketing agency {location} {state}, digital marketing {location}, {location} marketing services, social media management {location}, website design {location}, SEO {location} {stateFull}, PPC advertising {location}, local marketing {location}",
     "canonical": "https://dealer-template-2.vercel.app/locations/aurora",
     "robots": {
       "index": true,
