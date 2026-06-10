@@ -18,6 +18,7 @@
       "order": 2,
       "submitText": "SUBMIT FORM",
       "submitAction": "/api/contact",
+      "successMessage": "Thank you! We'll be in touch within 24 hours.",
       "contactInfo": [
         {
           "icon": "tabler:phone",

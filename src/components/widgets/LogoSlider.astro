@@ -119,25 +119,48 @@ const sliderId = `slider-${Math.random().toString(36).substr(2, 9)}`;
     document.querySelectorAll(".slider-track").forEach((track) => {
       const trackEl = track as HTMLElement;
       const sliderId = trackEl.id;
-      const itemsPerView = parseInt(trackEl.dataset.items || "4");
+      const baseItemsPerView = parseInt(trackEl.dataset.items || "4");
       const autoplay = trackEl.dataset.autoplay === "true";
       const speed = parseInt(trackEl.dataset.speed || "30") * 1000;
 
       const items = track.querySelectorAll(".slider-item");
       const totalItems = items.length;
-      const totalSlides = Math.ceil(totalItems / itemsPerView);
       let currentSlide = 0;
       let autoplayInterval: number | null = null;
 
-      // Create dots
+      function getItemsPerView() {
+        const width = window.innerWidth;
+        if (width <= 480) return 1;
+        if (width <= 768) return 2;
+        return baseItemsPerView;
+      }
+
+      function getTotalSlides() {
+        return Math.ceil(totalItems / getItemsPerView());
+      }
+
+      // Update item widths based on current viewport
+      function updateItemWidths() {
+        const ipv = getItemsPerView();
+        items.forEach((item) => {
+          (item as HTMLElement).style.width = `${100 / ipv}%`;
+        });
+      }
+
+      // Create/recreate dots
       const dotsContainer = document.getElementById(`${sliderId}-dots`);
-      if (dotsContainer && totalSlides > 1) {
-        for (let i = 0; i < totalSlides; i++) {
-          const dot = document.createElement("button");
-          dot.className = `w-2 h-2 rounded-full transition-all ${i === 0 ? "bg-primary-dark w-6" : "bg-gray-300"}`;
-          dot.dataset.slide = i.toString();
-          dot.addEventListener("click", () => goToSlide(i));
-          dotsContainer.appendChild(dot);
+      function rebuildDots() {
+        if (!dotsContainer) return;
+        dotsContainer.innerHTML = "";
+        const totalSlides = getTotalSlides();
+        if (totalSlides > 1) {
+          for (let i = 0; i < totalSlides; i++) {
+            const dot = document.createElement("button");
+            dot.className = `w-2 h-2 rounded-full transition-all ${i === currentSlide ? "bg-primary-dark w-6" : "bg-gray-300"}`;
+            dot.dataset.slide = i.toString();
+            dot.addEventListener("click", () => goToSlide(i));
+            dotsContainer.appendChild(dot);
+          }
         }
       }
 
@@ -153,19 +176,22 @@ const sliderId = `slider-${Math.random().toString(36).substr(2, 9)}`;
       }
 
       function goToSlide(index: number) {
-        currentSlide = index;
-        const offset = -(currentSlide * 100);
-        (track as HTMLElement).style.transform = `translateX(${offset}%)`;
+        const totalSlides = getTotalSlides();
+        currentSlide = Math.max(0, Math.min(index, totalSlides - 1));
+        const ipv = getItemsPerView();
+        const offset = -(currentSlide * (100 / ipv) * ipv);
+        trackEl.style.transform = `translateX(${offset}%)`;
         updateDots();
         resetAutoplay();
       }
 
       function nextSlide() {
-        currentSlide = (currentSlide + 1) % totalSlides;
+        currentSlide = (currentSlide + 1) % getTotalSlides();
         goToSlide(currentSlide);
       }
 
       function prevSlide() {
+        const totalSlides = getTotalSlides();
         currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
         goToSlide(currentSlide);
       }
@@ -185,22 +211,43 @@ const sliderId = `slider-${Math.random().toString(36).substr(2, 9)}`;
         `.slider-next[data-slider="${sliderId}"]`
       ) as HTMLButtonElement | null;
 
-      // Disable buttons when there's nothing to scroll
-      if (totalSlides <= 1) {
+      // Gray out / disable the chevrons when there is only one slide
+      function updateButtonStates() {
+        const disabled = getTotalSlides() <= 1;
         [prevBtn, nextBtn].forEach((btn) => {
           if (!btn) return;
-          btn.disabled = true;
-          btn.style.cursor = "default";
-          btn.style.boxShadow = "none";
-          btn.querySelector("svg")?.setAttribute("stroke", "#d1d5db");
+          btn.disabled = disabled;
+          btn.style.cursor = disabled ? "default" : "";
+          btn.style.boxShadow = disabled ? "none" : "";
+          btn
+            .querySelector("svg")
+            ?.setAttribute("stroke", disabled ? "#d1d5db" : "currentColor");
         });
       }
+
+      // Handle resize
+      function onResize() {
+        updateItemWidths();
+        if (currentSlide >= getTotalSlides()) {
+          currentSlide = 0;
+        }
+        goToSlide(currentSlide);
+        rebuildDots();
+        updateButtonStates();
+      }
+
+      window.addEventListener("resize", onResize);
 
       prevBtn?.addEventListener("click", prevSlide);
       nextBtn?.addEventListener("click", nextSlide);
 
+      // Initial setup
+      updateItemWidths();
+      rebuildDots();
+      updateButtonStates();
+
       // Start autoplay
-      if (autoplay && totalSlides > 1) {
+      if (autoplay && getTotalSlides() > 1) {
         resetAutoplay();
       }
 
@@ -213,24 +260,11 @@ const sliderId = `slider-${Math.random().toString(36).substr(2, 9)}`;
     });
   }
 
-  initSliders();
-  document.addEventListener("astro:after-swap", initSliders);
+  document.addEventListener("astro:page-load", initSliders);
 </script>
 
 <style>
   .logo-slider-container {
     position: relative;
-  }
-
-  @media (max-width: 768px) {
-    .slider-item {
-      width: 50% !important;
-    }
-  }
-
-  @media (max-width: 480px) {
-    .slider-item {
-      width: 100% !important;
-    }
   }
 </style>

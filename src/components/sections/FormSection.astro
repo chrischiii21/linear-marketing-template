@@ -47,14 +47,14 @@ interface Props {
 }
 
 const {
-  title = "Get in Touch",
-  subtitle = "We'd love to hear from you",
-  description = "Fill out the form below and we'll get back to you as soon as possible.",
+  title,
+  subtitle,
+  description,
   fields = [],
-  submitText = "Submit",
-  submitAction = "/api/contact",
+  submitText,
+  submitAction,
   method = "POST",
-  successMessage = "Thank you! We'll be in touch soon.",
+  successMessage,
   background = "white",
   showRecaptcha = true,
   recaptchaSiteKey = RECAPTCHA_SITE_KEY,

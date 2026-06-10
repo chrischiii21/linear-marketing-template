@@ -122,6 +122,7 @@ const solutions = defineCollection({
               })
             )
             .optional(),
+          subtitle: z.string().optional(),
           formFields: z
             .array(
               z.object({
@@ -145,6 +146,16 @@ const solutions = defineCollection({
                 pattern: z.string().optional(),
                 helpText: z.string().optional(),
                 width: z.enum(["full", "half"]).optional(),
+              })
+            )
+            .optional(),
+          contactInfo: z
+            .array(
+              z.object({
+                icon: z.string(),
+                label: z.string(),
+                value: z.string(),
+                link: z.string().optional(),
               })
             )
             .optional(),
@@ -306,6 +317,7 @@ const pages = defineCollection({
       z.object({
         section: z.string(),
         eyebrow: z.string().optional(),
+        subtitle: z.string().optional(),
         title: z.string().optional(),
         description: z.string().optional(),
         ctaText: z.string().optional(),
@@ -396,6 +408,17 @@ const pages = defineCollection({
           .optional(),
         submitText: z.string().optional(),
         submitAction: z.string().optional(),
+        successMessage: z.string().optional(),
+        contactInfo: z
+          .array(
+            z.object({
+              icon: z.string(),
+              label: z.string(),
+              value: z.string(),
+              link: z.string().optional(),
+            })
+          )
+          .optional(),
         members: z
           .array(
             z.object({
